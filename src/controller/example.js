@@ -3,13 +3,15 @@ import { Router } from 'express';
 import Example from '../model/example';
 import bodyParser from 'body-parser';
 
+import { authenticate } from '../middleware/authMiddleware'
+
 export default({ config, db }) => {
     let api = Router();
 
     // CRUD - Create Read Update Delete
 
     // '/v1/example/add'
-    api.post('/add', (req, res) => {
+    api.post('/add', authenticate, (req, res) => {
         let newExample = new Example();
         newExample.name = req.body.name;
 
